@@ -26,7 +26,7 @@ weekly_schedule = {
         # Tambahkan jadwal lainnya...
     ],
     "Selasa": [
-      {"time": "07:15:00", "label": "Upacara", "sound": "bel1.wav"},
+      {"time": "07:15:00", "label": "Apel Pagi", "sound": "bel1.wav"},
         {"time": "07:30:00", "label": "Pelajaran 1", "sound": "bel1.wav"},
         {"time": "08:15:00", "label": "Pelajaran 2", "sound": "bel2.wav"},
         {"time": "08:55:00", "label": "Pelajaran 3", "sound": "bel3.wav"},
@@ -42,7 +42,7 @@ weekly_schedule = {
     ],
     # Tambahkan untuk hari Rabu sampai Sabtu
        "Rabu": [
-         {"time": "07:15:00", "label": "Upacara", "sound": "bel1.wav"},
+         {"time": "07:15:00", "label": "Apel Pagi", "sound": "bel1.wav"},
         {"time": "07:30:00", "label": "Pelajaran 1", "sound": "bel1.wav"},
         {"time": "08:15:00", "label": "Pelajaran 2", "sound": "bel2.wav"},
         {"time": "08:55:00", "label": "Pelajaran 3", "sound": "bel3.wav"},
