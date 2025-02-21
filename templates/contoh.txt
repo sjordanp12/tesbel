@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bel Sekolah Otomatis</title>
+  </head>
+  <body>
+    <h1>Jadwal Bel Sekolah</h1>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Waktu</th>
+          <th>Keterangan</th>
+        </tr>
+      </thead>
+      <tbody id="schedule-table">
+        <!-- Jadwal bel akan diisi dengan JavaScript -->
+      </tbody>
+    </table>
+
+    <!-- Tombol untuk memulai jadwal bel -->
+    <button id="start-bell">Mulai Jadwal Bel</button>
+
+    <!-- Audio player untuk bel (disembunyikan) -->
+    <audio id="bell-sound" controls style="display: none"></audio>
+
+    <!-- Pemutar audio manual (hanya sebagai contoh) -->
+    <!-- <audio controls>
+      <source src="/static/sound/bel1.wav" type="audio/wav" />
+      Your browser does not support the audio tag.
+    </audio> -->
+
+    <script>
+      // Daftar nama hari dalam seminggu
+      const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+      const today = new Date().getDay();
+      const currentDay = days[today]; // Mendapatkan nama hari ini
+
+      // Fungsi untuk memulai jadwal bel setelah tombol diklik
+      document.getElementById('start-bell').addEventListener('click', () => {
+        // Mengambil jadwal bel dari server berdasarkan hari ini
+        fetch(`/get_schedule/${currentDay}`)
+          .then((response) => response.json())
+          .then((schedule) => {
+            const tableBody = document.getElementById('schedule-table');
+            // Memasukkan jadwal bel ke dalam tabel HTML
+            schedule.forEach((bell) => {
+              let row = `<tr><td>${bell.time}</td><td>${bell.label}</td></tr>`;
+              tableBody.innerHTML += row;
+            });
+
+            // Memeriksa jadwal bel setiap detik
+            setInterval(() => {
+              checkBellSchedule(schedule);
+            }, 1000);
+          });
+      });
+
+      // Fungsi untuk memeriksa waktu dan memutar suara bel
+      function checkBellSchedule(schedule) {
+        fetch('/get_time') // Mendapatkan waktu Jakarta dari server
+          .then((response) => response.json())
+          .then((data) => {
+            const currentTime = data.time; // Waktu saat ini
+            schedule.forEach((bell) => {
+              // Jika waktu bel sesuai dengan waktu saat ini, putar suara
+              if (bell.time === currentTime) {
+                playBell(bell.sound);
+              }
+            });
+          });
+      }
+
+      // Fungsi untuk memutar suara bel
+      function playBell(soundFile) {
+        const bellSound = document.getElementById('bell-sound');
+        bellSound.src = `/static/sound/${soundFile}`; // Menetapkan sumber audio
+        bellSound.play(); // Memutar suara bel
+      }
+    </script>
+  </body>
+</html>
