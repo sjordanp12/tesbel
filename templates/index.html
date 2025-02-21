@@ -116,22 +116,20 @@
           });
 
         // Mengambil jadwal bel dari server berdasarkan hari ini
-        fetch(`/get_schedule/${currentDay}`)
-          .then((response) => response.json())
-          .then((schedule) => {
-            const tableBody = document.getElementById('schedule-table');
-            // Memasukkan jadwal bel ke dalam tabel HTML
-            schedule.forEach((bell) => {
-              let row = `<tr><td>${bell.time}</td><td>${bell.label}</td></tr>`;
-              tableBody.innerHTML += row;
-            });
+       fetch(`/get_schedule/${currentDay}`)
+  .then((response) => response.json())
+  .then((schedule) => {
+    console.log('Jadwal yang diterima:', schedule); // Debug output
+    const tableBody = document.getElementById('schedule-table');
+    schedule.forEach((bell) => {
+      let row = `<tr><td>${bell.time}</td><td>${bell.label}</td></tr>`;
+      tableBody.innerHTML += row;
+    });
+    setInterval(() => {
+      checkBellSchedule(schedule);
+    }, 60000);
+  });
 
-            // Memeriksa jadwal bel setiap detik
-            setInterval(() => {
-              checkBellSchedule(schedule);
-            }, 60000); // Cek setiap menit
-          });
-      });
 
       // Fungsi untuk memeriksa waktu dan memutar suara bel
       function checkBellSchedule(schedule) {
@@ -149,18 +147,19 @@
       }
 
       // Fungsi untuk memutar suara bel
-      function playBell(soundFile) {
-        const bellSound = document.getElementById('bell-sound');
-        bellSound.src = `/static/sound/${soundFile}`; // Menetapkan sumber audio
-        bellSound
-          .play()
-          .then(() => {
-            console.log('Memutar suara bel:', soundFile);
-          })
-          .catch((error) => {
-            console.log('Gagal memutar suara bel:', error);
-          });
-      }
+     function playBell(soundFile) {
+  const bellSound = document.getElementById('bell-sound');
+  bellSound.src = `/static/sound/${soundFile}`; // pastikan path file sesuai
+  bellSound
+    .play()
+    .then(() => {
+      console.log('Memutar suara bel:', soundFile);
+    })
+    .catch((error) => {
+      console.log('Gagal memutar suara bel:', error);
+    });
+}
+
     </script>
   </body>
 </html>
