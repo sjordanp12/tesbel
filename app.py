@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, send_from_directory, make_response
 from datetime import datetime
 import pytz
 
@@ -118,6 +118,11 @@ def get_schedule(day):
 def get_time():
     current_time = datetime.now(timezone).strftime('%H:%M:%S')
     return jsonify({"time": current_time})
-
+@app.route('/static/sound/<path:filename>')
+def serve_audio(filename):
+    response = make_response(send_from_directory('static/sound', filename))
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Content-Type'] = 'audio/wav'
+    return response
 if __name__ == '__main__':
     app.run(debug=True)
