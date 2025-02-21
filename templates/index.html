@@ -102,21 +102,22 @@
       const currentDay = days[today]; // Mendapatkan nama hari ini
 
       // Fungsi untuk memulai jadwal bel setelah tombol diklik
-      document.getElementById('start-bell').addEventListener('click', () => {
-        // Trigger pemutaran suara setelah klik agar browser mengizinkan pemutaran otomatis berikutnya
-        const bellSound = document.getElementById('bell-sound');
-        bellSound.src = ''; // Assign empty source at first to initialize
-        bellSound
-          .play()
-          .then(() => {
-            console.log('Audio diinisialisasi.');
-          })
-          .catch((error) => {
-            console.error('Gagal memutar audio:', error);
-          });
+document.getElementById('start-bell').addEventListener('click', () => {
+  const bellSound = document.getElementById('bell-sound');
+  bellSound.src = '/static/sound/pelajaran1.wav'; // beri path untuk inisialisasi
+  bellSound
+    .play()
+    .then(() => {
+      console.log('Audio diinisialisasi dan siap untuk diputar.');
+    })
+    .catch((error) => {
+      console.error('Gagal memutar audio:', error);
+    });
+});
+
 
         // Mengambil jadwal bel dari server berdasarkan hari ini
-       fetch(`/get_schedule/${currentDay}`)
+fetch(`/get_schedule/${currentDay}`)
   .then((response) => response.json())
   .then((schedule) => {
     console.log('Jadwal yang diterima:', schedule); // Debug output
@@ -129,6 +130,7 @@
       checkBellSchedule(schedule);
     }, 60000);
   });
+
 
 
       // Fungsi untuk memeriksa waktu dan memutar suara bel
@@ -147,7 +149,7 @@
       }
 
       // Fungsi untuk memutar suara bel
-     function playBell(soundFile) {
+function playBell(soundFile) {
   const bellSound = document.getElementById('bell-sound');
   bellSound.src = `/static/sound/${soundFile}`; // pastikan path file sesuai
   bellSound
