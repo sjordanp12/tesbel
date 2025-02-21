@@ -1,19 +1,5 @@
 {
   "version": 2,
   "builds": [{ "src": "app.py", "use": "@vercel/python" }],
-  "headers": [
-    {
-      "source": "/static/sound/(.*)",
-      "headers": [
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "*"
-        },
-        {
-          "key": "Content-Type",
-          "value": "audio/wav"
-        }
-      ]
-    }
-  ]
+  "routes": [{ "src": "/(.*)", "dest": "app.py" }]
 }
