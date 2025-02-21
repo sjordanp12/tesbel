@@ -74,7 +74,7 @@
       <!-- Audio player untuk bel (disembunyikan) -->
       <audio id="bell-sound" controls style="display: none"></audio>
 
-           <audio controls>
+      <audio controls>
         <source src="/static/sound/bel1.wav" type="audio/wav" />
         Browser Anda tidak mendukung audio element.
       </audio>
@@ -88,80 +88,4 @@
             <h5 class="text-uppercase"><i class="bi bi-bell-fill"></i> Bel Sekolah Otomatis</h5>
             <p>"Solusi modern untuk pengelolaan jadwal bel sekolah yang otomatis dan efisien".</p>
             <hr />
-            <a href="" class="text-light">&copy; Developed with <i class="bi bi-heart-fill text-danger"></i> by Team Kerja Praktik <br />SMKS Al Washliyah 8 Perbaungan.</a>
-          </div>
-        </div>
-      </div>
-    </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script>
-      // Daftar nama hari dalam seminggu
-      const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-      const today = new Date().getDay();
-      const currentDay = days[today]; // Mendapatkan nama hari ini
-
-      // Fungsi untuk memulai jadwal bel setelah tombol diklik
-document.getElementById('start-bell').addEventListener('click', () => {
-  const bellSound = document.getElementById('bell-sound');
-  bellSound.src = '/static/sound/pelajaran1.wav'; // beri path untuk inisialisasi
-  bellSound
-    .play()
-    .then(() => {
-      console.log('Audio diinisialisasi dan siap untuk diputar.');
-    })
-    .catch((error) => {
-      console.error('Gagal memutar audio:', error);
-    });
-});
-
-
-        // Mengambil jadwal bel dari server berdasarkan hari ini
-fetch(`/get_schedule/${currentDay}`)
-  .then((response) => response.json())
-  .then((schedule) => {
-    console.log('Jadwal yang diterima:', schedule); // Debug output
-    const tableBody = document.getElementById('schedule-table');
-    schedule.forEach((bell) => {
-      let row = `<tr><td>${bell.time}</td><td>${bell.label}</td></tr>`;
-      tableBody.innerHTML += row;
-    });
-    setInterval(() => {
-      checkBellSchedule(schedule);
-    }, 60000);
-  });
-
-
-
-      // Fungsi untuk memeriksa waktu dan memutar suara bel
-      function checkBellSchedule(schedule) {
-        fetch('/get_time') // Mendapatkan waktu Jakarta dari server
-          .then((response) => response.json())
-          .then((data) => {
-            const currentTime = data.time; // Waktu saat ini
-            schedule.forEach((bell) => {
-              // Jika waktu bel sesuai dengan waktu saat ini, putar suara
-              if (bell.time === currentTime) {
-                playBell(bell.sound);
-              }
-            });
-          });
-      }
-
-      // Fungsi untuk memutar suara bel
-function playBell(soundFile) {
-  const bellSound = document.getElementById('bell-sound');
-  bellSound.src = `/static/sound/${soundFile}`; // pastikan path file sesuai
-  bellSound
-    .play()
-    .then(() => {
-      console.log('Memutar suara bel:', soundFile);
-    })
-    .catch((error) => {
-      console.log('Gagal memutar suara bel:', error);
-    });
-}
-
-    </script>
-  </body>
-</html>
+            <a href="" class="text-light">&copy; Developed with <i class="bi bi-heart-fill text-danger"></i> by Team Kerja Praktik <br />SMKS Al Washliyah 8 Perba
